@@ -1,17 +1,15 @@
 import Head from 'next/head';
-import Sblock from '../../components/sblock';
+import SortingBlock from '../../components/SortingBlock';
 import { shuffle, highlight, swap, setIsSorting, setComparisons, setNoBlocks, genBlocks, setBlock, insertBlock } from '../../actions';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
 import RangeSlider from 'react-bootstrap-range-slider';
+import Desktop from '../../components/Desktop';
 
 class Sorting extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            b: 10,
-        };
         this.bubbleSort = this.bubbleSort.bind(this);
         this.doMergeSort = this.doMergeSort.bind(this);
         this.doQuickSort = this.doQuickSort.bind(this);
@@ -255,6 +253,7 @@ class Sorting extends Component {
 
     render() {
         const state = this.props.sortingState;
+        
         return (
             <>
                 <Head>
@@ -309,11 +308,13 @@ class Sorting extends Component {
                             </li>
                         </ul>
                     </div>
-                    <div style={styles.container}>
-                        {state.blocks.map((block, i) => (
-                            <Sblock props={block} key={i} />
-                        ))}
-                    </div>
+                    <Desktop>
+                        <div style={styles.container}>
+                            {state.blocks.map((block, i) => (
+                                <SortingBlock props={block} key={i} />
+                            ))}
+                        </div>
+                    </Desktop>
                 </div>
             </>
         );
@@ -351,7 +352,7 @@ const styles = {
         alignItems: 'center',
         //background: 'red',
         height: '100%',
-        margin: 50,
+        margin: 20,
         marginTop: 0,
         padding: 20
     },
@@ -362,7 +363,7 @@ const styles = {
         alignItems: 'flex-end',
         width: 600,
         minWidth: 600,
-        margin: 50,
+        margin: 20,
         marginTop: 0,
         marginRight: '15rem',
         height: 300,
